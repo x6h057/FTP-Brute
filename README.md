@@ -92,7 +92,3 @@ Success: anonymous:ftp
 ## Contributing
 
 Feel free to open issues and pull requests if you'd like to contribute to the project. Suggestions, bug reports, and improvements are always welcome.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
