@@ -1,17 +1,27 @@
 import ftplib
 import argparse
 
+version = "v1.0.1"
+
 ftpserver = ftplib.FTP()
 
 parser = argparse.ArgumentParser(prog='ftpBrute',
                                  description='Bruteforce FTP with wordlists or common built-in usernames/passwords',
-                                 epilog='v1.0.1')
+                                 epilog=f'{version}')
 
 parser.add_argument('--host', help='Specify the target FTP server hostname (e.g., `192.168.1.1`).', type=str, required=True)
 parser.add_argument('--port', help='Specify the FTP port (default is `21`).', type=int, required=True)
 
 parser.add_argument('-u', '--username', help='Provide a custom username for the brute-force attack.', type=str)
 parser.add_argument('-p', '--password', help='Provide a custom password for the brute-force attack.', type=str)
+
+parser.add_argument('-w', '--wordlist', help='Provide a wordlist file to attempt brute-forcing usernames (one per line).', type=str)
+
+args = parser.parse_args()
+
+if not args.host:
+    parser.print_help()
+
 
 usernames = [
     "anonymous",
@@ -150,14 +160,6 @@ passwords = [
     "9999",
     "PlcmSpIp"
 ]
-
-
-parser.add_argument('-w', '--wordlist', help='Provide a wordlist file to attempt brute-forcing usernames (one per line).', type=str)
-
-args = parser.parse_args()
-
-if not args.host:
-    parser.print_help()
 
 def bruteforce():
     #bruteforce with given values

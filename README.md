@@ -53,7 +53,7 @@ python ftpBrute.py --host <hostname> --port <port> [-u <username>] [-p <password
    python ftpBrute.py --host 192.168.1.1 --port 21
    ```
 
-3. **Bruteforce using a wordlist for usernames:**
+3. **Bruteforce using a wordlist for usernames and passwords:**
 
    ```bash
    python ftpBrute.py --host 192.168.1.1 --port 21 -w wordlist.txt
