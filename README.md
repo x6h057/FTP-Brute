@@ -13,7 +13,7 @@
 
 1. Clone the repository or download the script file:
    ```bash
-   git clone https://github.com/yourusername/ftpbrute.git
+   git clone https://github.com/x6h057/FTP-Brute.git
    ```
 
 2. Make sure you have Python 3 installed.
