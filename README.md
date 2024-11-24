@@ -4,9 +4,13 @@
 
 ## How it looks
 
-![Failed](/Failed.png)
+![Success](/pictures/Success.png)
 
-This is how it looks when it fails to connect!
+Connection Succeded!
+
+![Failed](/pictures/Failed.png)
+
+Connection Failed!
 
 
 ## Features
@@ -25,6 +29,11 @@ This is how it looks when it fails to connect!
    ```
 
 2. Make sure you have Python 3 installed.
+
+   Optional (recommend).
+   ```bash
+   python3 -m venv venv && source venv/bin/activate
+   ```
 
 3. Install the necessary Python modules (if not already installed):
    ```bash
@@ -91,10 +100,10 @@ The script handles connection and login errors gracefully, printing failure mess
 
 ### Example output:
 ```
-Bruteforcing: ftp:ftp
-Failed: ftp:ftp - [Errno 111] Connection refused
-Bruteforcing: anonymous:ftp
-Success: anonymous:ftp
+Bruteforcing: [ftp:ftp]
+Failed: [ftp:ftp] - [Errno 111] Connection refused
+Bruteforcing: [anonymous:ftp]
+Success: [anonymous:ftp]
 ```
 
 ## Contributing
