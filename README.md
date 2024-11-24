@@ -2,12 +2,19 @@
 
 `FTPBrute` is a Python script that allows you to brute-force FTP login credentials using either custom usernames and passwords or a list of common built-in credentials. The script can also use a wordlist to perform brute-force attacks on FTP servers.
 
+## How it looks
+
+![Failed](/Failed.png)
+This is how it looks when it fails to connect!
+
+
 ## Features
 
 - Brute-force FTP login using custom or built-in credentials.
 - Support for specifying the FTP server's hostname and port.
 - Ability to use a wordlist for usernames and passwords.
 - Custom error handling for FTP connection and login failures.
+- Colors for better appearance and easy understanding.
   
 ## Installation
 
@@ -20,7 +27,7 @@
 
 3. Install the necessary Python modules (if not already installed):
    ```bash
-   pip install ftplib argparse
+   pip install -r requirements.txt
    ```
 
 ## Usage
