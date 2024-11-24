@@ -5,6 +5,7 @@
 ## How it looks
 
 ![Failed](/Failed.png)
+
 This is how it looks when it fails to connect!
 
 
