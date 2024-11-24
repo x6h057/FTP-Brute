@@ -1,4 +1,5 @@
 anonymous
+ftp
 rootpasswd
 12hrs37
 b1uRR3
@@ -10,7 +11,6 @@ nas
 wago
 user
 guest
-ftp
 password
 avery
 123456
