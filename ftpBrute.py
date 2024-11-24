@@ -3,7 +3,7 @@ import argparse
 from colorama import Fore, Style
 import sys
 
-version = "v1.0.2"
+version = "v1.1.0"
 
 logo = r"""
     ________________        ____             __     
